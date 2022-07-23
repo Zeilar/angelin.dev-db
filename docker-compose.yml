@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+    db:
+        image: mysql
+        restart: always
+        container_name: angelin.dev-db
+        volumes:
+            - data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - 3306:3306
+    phpmyadmin:
+        container_name: angelin.dev-phpmyadmin
+        image: phpmyadmin
+        restart: always
+        links:
+          - db
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+volumes:
+    data:
